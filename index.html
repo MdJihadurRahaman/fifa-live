@@ -4,115 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Stream - Md Jihadur Rahaman</title>
-    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background: #0a0a0a;
-            color: #fff;
-            text-align: center;
-            font-family: sans-serif;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        body { 
+            background: #0d0d0d; 
+            color: #fff; 
+            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
             min-height: 100vh;
         }
-
-        h1 { font-size: 1.5rem; margin-bottom: 4px; }
-        p.sub { color: #aaa; margin-bottom: 16px; font-size: 0.95rem; }
-
-        .player-wrapper {
-            width: 100%;
-            max-width: 860px;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
+        
+        .header-section {
+            margin-bottom: 20px;
         }
+        h1 { margin-bottom: 5px; font-size: 2.2rem; letter-spacing: 0.5px; }
+        .tagline { margin-top: 0; color: #00a8ff; font-weight: 500; font-size: 1rem; }
+        .event-title { color: #aaa; font-size: 0.9rem; background: #222; padding: 4px 12px; border-radius: 15px; display: inline-block; }
 
-        .video-js {
-            width: 100% !important;
-            height: auto !important;
+        .player-wrapper { 
+            max-width: 850px; 
+            width: 100%; 
+            margin: 10px auto 25px auto; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            background: #111; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            /* রেসপন্সিভ প্লেয়ারের জন্য */
             aspect-ratio: 16 / 9;
         }
-
-        /* ফুলস্ক্রিন ফিক্স */
-        .video-js.vjs-fullscreen {
-            width: 100vw !important;
-            height: 100vh !important;
-            max-width: 100vw !important;
-            max-height: 100vh !important;
-            padding-top: 0 !important;
-            aspect-ratio: unset !important;
-            border-radius: 0 !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
+        .player-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: none;
         }
 
-        .video-js.vjs-fullscreen video,
-        .video-js.vjs-fullscreen .vjs-tech {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
+        .branding-section {
+            margin-top: 10px;
+            max-width: 600px;
+        }
+        .branding-text {
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
-        /* মোবাইলে নেটিভ ফুলস্ক্রিনেও কাজ করবে */
-        video::-webkit-media-controls { display: flex !important; }
-        video:-webkit-full-screen {
-            width: 100vw !important;
-            height: 100vh !important;
-            object-fit: cover !important;
+        .buttons { display: flex; justify-content: center; gap: 15px; }
+        .btn-linkedin { 
+            padding: 10px 24px; 
+            text-decoration: none; 
+            color: white; 
+            background: #0077b5; /* লিঙ্কডইন অফিসিয়াল কালার */
+            border-radius: 25px; 
+            font-weight: bold; 
+            font-size: 0.9rem;
+            transition: 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
+        }
+        .btn-linkedin:hover { 
+            background: #005a87;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            margin-top: auto;
+            padding-top: 40px;
+            color: #555;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
-    <h1>Md Jihadur Rahaman</h1>
-    <p class="sub">🔴 FIFA WC 2026 — Live Stream</p>
 
+    <!-- হেডার ও ব্র্যান্ডিং -->
+    <div class="header-section">
+        <h1>Md Jihadur Rahaman</h1>
+        <div class="tagline">Web Developer & Tech Enthusiast</div>
+        <div class="event-title">⚽ FIFA WC2026 Live Stream Channel</div>
+    </div>
+    
+    <!-- ভিডিও প্লেয়ার -->
     <div class="player-wrapper">
-        <video
-            id="my-video"
-            class="video-js vjs-big-play-centered vjs-theme-city"
-            controls
-            preload="auto"
-            playsinline
-        >
-            <source src="https://corestream.ronaldovurdu.help//trt1/tracks-v1a1/mono.m3u8">
-        </video>
+        <iframe src="https://cdn.stmify.com/embed-free/v1/tsn-1-ca-jw" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" allowfullscreen allow="encrypted-media"></iframe>
     </div>
 
-    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
-    <script>
-        var player = videojs('my-video', {
-            fluid: false,
-            responsive: true,
-            fill: false,
-            html5: {
-                vhs: {
-                    overrideNative: true
-                },
-                nativeVideoTracks: false,
-                nativeAudioTracks: false,
-                nativeTextTracks: false
-            }
-        });
+    <!-- লিঙ্কডইন কানেক্ট সেকশন -->
+    <div class="branding-section">
+        <div class="buttons">
+            <a href="https://www.linkedin.com/in/mdjihadurrahaman/" target="_blank" class="btn-linkedin">
+                Connect on LinkedIn
+            </a>
+        </div>
+    </div>
 
-        // ফুলস্ক্রিনে object-fit: cover নিশ্চিত করা
-        player.on('fullscreenchange', function () {
-            var techEl = player.tech(true).el();
-            if (player.isFullscreen()) {
-                techEl.style.objectFit = 'cover';
-                techEl.style.width = '100%';
-                techEl.style.height = '100%';
-            } else {
-                techEl.style.objectFit = '';
-            }
-        });
-    </script>
+    <!-- ফুটার -->
+    <footer>
+        &copy; 2026 Md Jihadur Rahaman. All Rights Reserved.
+    </footer>
+
 </body>
 </html>
