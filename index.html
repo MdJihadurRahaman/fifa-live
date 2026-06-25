@@ -1,155 +1,209 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Stream - Md Jihadur Rahaman</title>
-    <style>
-        /* গ্লোবাল রিসেট */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* বডি লেআউট */
-        body { 
-            background: #09090b;
-            color: #f4f4f5; 
-            text-align: center; 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            min-height: 100vh;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
-            justify-content: flex-start;
-            padding: clamp(1rem, 4vw, 2.5rem) 15px; 
-            line-height: 1.5;
-        }
-        
-        /* মেইন কন্টেইনার */
-        .main-container {
-            width: 100%;
-            max-width: 850px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+<title>Live Stream - Md Jihadur Rahaman</title>
 
-        /* হেডার সেকশন */
-        .header-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
+<style>
 
-        /* আপনার পছন্দ অনুযায়ী টেক্সট কালার কালো করা হলো */
-        h1 { 
-            font-size: clamp(1.6rem, 5vw, 2.5rem); 
-            font-weight: 700;
-            color: #000000; 
-            line-height: 1.2;
-        }
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .tagline { 
-            font-size: clamp(0.85rem, 2.5vw, 1.05rem); 
-            color: #00a8ff; 
-            font-weight: 600; 
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
+body { 
+    background: #09090b;
+    color: #f4f4f5; 
+    text-align: center; 
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    padding: clamp(1rem, 4vw, 2.5rem) 15px; 
+    line-height: 1.5;
+}
 
-        /* ইভেন্ট ব্যাজ */
-        .event-title { 
-            color: #d4d4d8; 
-            font-size: 0.85rem; 
-            background: #18181b; 
-            border: 1px solid #27272a;
-            padding: 6px 14px; 
-            border-radius: 20px; 
-            display: inline-block;
-            margin-top: 4px;
-        }
 
-        /* ভিডিও প্লেয়ার র‍্যাপার */
-        .player-wrapper { 
-            width: 100%; 
-            aspect-ratio: 16 / 9;
-            border-radius: 12px; 
-            overflow: hidden; 
-            background: #000; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+.main-container {
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-        .player-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
 
-        /* লিঙ্কডইন বাটন */
-        .buttons { 
-            display: flex; 
-            justify-content: center; 
-            width: 100%;
-            margin-top: 5px;
-        }
+.header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
 
-        .btn-linkedin { 
-            padding: 10px 24px; 
-            text-decoration: none; 
-            color: white; 
-            background: #0077b5; 
-            border-radius: 25px; 
-            font-weight: 600; 
-            font-size: 0.95rem;
-            transition: background 0.2s ease, transform 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
-        }
 
-        .btn-linkedin:hover { 
-            background: #005a87;
-            transform: translateY(-2px);
-        }
-        
-        /* ফুটার */
-        footer {
-            margin-top: auto;
-            padding-top: 40px;
-            color: #52525b;
-            font-size: 0.8rem;
-        }
-    </style>
+/* Fixed Header Text */
+h1 { 
+    font-size: clamp(1.6rem, 5vw, 2.5rem); 
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    text-align: center;
+
+    text-shadow:
+        0 2px 6px rgba(0,0,0,0.9),
+        0 0 15px rgba(0,168,255,0.45);
+
+    letter-spacing: 0.02em;
+}
+
+
+.tagline { 
+    font-size: clamp(0.85rem, 2.5vw, 1.05rem); 
+    color: #00a8ff; 
+    font-weight: 600; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+.event-title { 
+    color: #d4d4d8; 
+    font-size: 0.85rem; 
+    background: #18181b; 
+    border: 1px solid #27272a;
+    padding: 6px 14px; 
+    border-radius: 20px; 
+    display: inline-block;
+}
+
+
+.player-wrapper { 
+    width: 100%; 
+    aspect-ratio: 16 / 9;
+    border-radius: 12px; 
+    overflow: hidden; 
+    background: #000; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+
+.player-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+
+.buttons { 
+    display: flex; 
+    justify-content: center; 
+    width: 100%;
+}
+
+
+.btn-linkedin { 
+    padding: 10px 24px; 
+    text-decoration: none; 
+    color: white; 
+    background: #0077b5; 
+    border-radius: 25px; 
+    font-weight: 600; 
+    font-size: 0.95rem;
+    transition: 0.2s;
+}
+
+
+.btn-linkedin:hover { 
+    background: #005a87;
+    transform: translateY(-2px);
+}
+
+
+footer {
+    margin-top: 40px;
+    color: #52525b;
+    font-size: 0.8rem;
+}
+
+
+</style>
+
 </head>
+
+
 <body>
 
-    <div class="main-container">
-        <!-- হেডার ও ব্র্যান্ডিং -->
-        <div class="header-section">
-            <h1>Md Jihadur Rahaman</h1>
-            <div class="tagline">Curious Learner & Tech Enthusiast</div>
-            <div class="event-title">⚽ FIFA WC2026 Live Stream Channel</div>
-        </div>
-        
-        <!-- ভিডিও প্লেয়ার -->
-        <div class="player-wrapper">
-            <iframe src="https://cdn.stmify.com/embed-free/v1/tsn-1-ca-jw" scrolling="no" allowfullscreen allow="encrypted-media"></iframe>
-        </div>
 
-        <!-- লিঙ্কডইন কানেক্ট সেকশন -->
-        <div class="buttons">
-            <a href="https://www.linkedin.com/in/mdjihadurrahaman/" target="_blank" class="btn-linkedin">
-                Connect on LinkedIn
-            </a>
-        </div>
-    </div>
+<div class="main-container">
 
-    <!-- ফুটার -->
-    <footer>
-        &copy; 2026 Md Jihadur Rahaman. All Rights Reserved.
-    </footer>
+
+<div class="header-section">
+
+<h1>
+Md Jihadur Rahaman
+</h1>
+
+
+<div class="tagline">
+Curious Learner & Tech Enthusiast
+</div>
+
+
+<div class="event-title">
+⚽ FIFA WC2026 Live Stream Channel
+</div>
+
+
+</div>
+
+
+
+<div class="player-wrapper">
+
+<iframe 
+src="https://cdn.stmify.com/embed-free/v1/tsn-1-ca-jw"
+scrolling="no"
+allowfullscreen
+allow="encrypted-media">
+</iframe>
+
+</div>
+
+
+
+<div class="buttons">
+
+<a 
+href="https://www.linkedin.com/in/mdjihadurrahaman/"
+target="_blank"
+class="btn-linkedin">
+
+Connect on LinkedIn
+
+</a>
+
+</div>
+
+
+
+</div>
+
+
+
+<footer>
+
+© 2026 Md Jihadur Rahaman. All Rights Reserved.
+
+</footer>
+
+
 
 </body>
 </html>
