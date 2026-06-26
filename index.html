@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Md Jihadur Rahaman - Live Stream</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         /* বেসিক রিসেট ও ব্যাকগ্রাউন্ড */
         * {
@@ -76,7 +77,7 @@
             animation: blink 1.5s infinite;
         }
 
-        /* ভিডিও প্লেয়ার কন্টেইনার (১৬:৯ রেশিও ঠিক রাখার জন্য) */
+        /* ভিডিও প্লেয়ার কন্টেইনার */
         .video-wrapper {
             position: relative;
             width: 100%;
@@ -86,17 +87,60 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.05);
             margin-bottom: 25px;
-            aspect-ratio: 16 / 9; /* সব ডিভাইসে স্ক্রিন রেশিও পারফেক্ট রাখবে */
+            aspect-ratio: 16 / 9;
         }
-
-        /* iframe এর রেসপনসিভ স্টাইল */
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        video {
+            display: block;
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: contain;
+        }
+
+        /* সার্ভার বাটন বক্স ডিজাইন (ফ্লেক্স গ্রিড) */
+        .server-box {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .server-btn {
+            background: #1f2937;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            min-width: 110px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* হোভার ইফেক্ট */
+        .server-btn:hover {
+            background: #374151;
+            transform: translateY(-1px);
+        }
+
+        /* 4k ব্যাজ বাটন স্পেশাল স্টাইল */
+        .badge-4k {
+            border-color: #eab308;
+            color: #fde047;
+        }
+        .badge-4k:hover {
+            background: rgba(234, 179, 8, 0.2);
+        }
+
+        /* অ্যাক্টিভ (চলমান) সার্ভার বাটন ইফেক্ট */
+        .server-btn.active {
+            background: #2563eb;
+            border-color: #60a5fa;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
+            color: white;
         }
 
         /* লিঙ্কডইন বাটন */
@@ -111,6 +155,7 @@
             font-size: 0.95rem;
             box-shadow: 0 4px 15px rgba(0, 119, 181, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
         }
         .btn-linkedin:hover {
             transform: translateY(-2px);
@@ -132,9 +177,10 @@
             100% { opacity: 0.3; }
         }
 
-        /* মোবাইল স্ক্রিনের জন্য */
-        @media (max-width: 768px) {
+        /* মোবাইল স্ক্রিন রেসপনসিভ */
+        @media (max-width: 480px) {
             .header h1 { font-size: 1.8rem; }
+            .server-btn { width: 100%; }
         }
     </style>
 </head>
@@ -148,8 +194,23 @@
         </div>
 
         <div class="video-wrapper">
-<iframe src="//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw" width="100%" height="500px" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" allowfullscreen  allow="encrypted-media"></iframe>
+            <video id="video" controls autoplay muted playsinline></video>
         </div>
+
+        <div class="server-box">                    
+            <button id="btn-0" class="server-btn badge-4k active" onclick="changeServer('https://nhjjhhjhjjhfjj.pages.dev/1782511273/6cccaaff5be44092a095c864bc8b6486/eZQaBXKMfJNW7ttS-jMyjL5FBePSPsrIZWodV3Z1CqM/fox4k-usa.m3u8', 0)">            
+                Server 1     
+            </button>                    
+            <button id="btn-1" class="server-btn badge-hd" onclick="changeServer('https://tahmidx.cinemoja2.workers.dev/', 1)">            
+                Server 2        
+            </button>                    
+            <button id="btn-2" class="server-btn badge-hd" onclick="changeServer('https://nhjjhhjhjjhfjj.pages.dev/1782510761/3023cd13a3e14f12a1f2a7cfec65500b/U7-6SPhUltFwYQWlHDZAR8OJgVYlYQmXJjjGcaDKyuE/fox-usa.m3u8', 2)">            
+                Server 3        
+            </button>                    
+            <button id="btn-3" class="server-btn badge-hd" onclick="changeServer('https://nhjjhhjhjjhfjj.pages.dev/1782510867/f9a6277ea834417a99643095abd06d71/0I52ZEUvQEL0Uu_rrOKDB78GByQpBiOh00AZW-ZWnJY/fox-sports-1.m3u8', 3)">            
+                Server 4        
+            </button>                    
+        </div> 
 
         <a href="https://www.linkedin.com" target="_blank" class="btn-linkedin">LinkedIn</a>
 
@@ -157,6 +218,59 @@
             &copy; 2026 Md Jihadur Rahaman
         </div>
     </div>
+
+    <script>
+        var video = document.getElementById('video');
+        var hls = null;
+
+        // ভিডিও লোড করার মূল ফাংশন
+        function loadStream(url) {
+            if (hls) {
+                hls.destroy();
+            }
+
+            if (Hls.isSupported()) {
+                hls = new Hls({ maxBufferLength: 30 });
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play().catch(function(e) {
+                        console.log("Autoplay prevented, waiting for user interaction");
+                    });
+                });
+            } 
+            // সাফারি বা আইওএস (iOS) ব্রাউজারের নেটিভ সাপোর্টের জন্য
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.addEventListener('loadedmetadata', function() {
+                    video.play();
+                });
+            }
+        }
+
+        // বাটন ক্লিক করে সার্ভার চেঞ্জ করার ফাংশন
+        function changeServer(url, btnId) {
+            loadStream(url);
+
+            // সব বাটন থেকে 'active' ক্লাস রিমুভ করা
+            var buttons = document.querySelectorAll('.server-btn');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // নির্দিষ্ট ক্লিক করা বাটনে 'active' ক্লাস যোগ করা
+            var activeBtn = document.getElementById('btn-' + btnId);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+        }
+
+        // পেজ লোড হওয়ার সাথে সাথে ডিফল্টভাবে Server 5 (যা এখন btn-0) চালু হবে
+        window.onload = function() {
+            var defaultUrl = document.getElementById('btn-0').getAttribute('onclick').match(/'([^']+)'/)[1];
+            loadStream(defaultUrl);
+        };
+    </script>
 
 </body>
 </html>
