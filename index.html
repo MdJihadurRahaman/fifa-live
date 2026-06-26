@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Md Jihadur Rahaman - Live Stream</title>
+    <!-- .m3u8 স্ট্রিমিং ফাইল চালানোর জন্য HLS.js লাইব্রেরি -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         /* বেসিক রিসেট ও ব্যাকগ্রাউন্ড */
@@ -48,7 +49,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px; /* টেক্সট ও SVG এর মাঝে স্পেস */
+        }
+        
+        /* ব্রাজিলের ফ্ল্যাগ SVG এর স্টাইল */
+        .brazil-flag-svg {
+            width: 24px;
+            height: auto;
+            border-radius: 2px; /* সামান্য কার্ভ যাতে দেখতে প্রিমিয়াম লাগে */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            display: inline-block;
+            vertical-align: middle;
         }
 
         /* লাইভ ব্যাজ */
@@ -189,17 +200,28 @@
     <div class="container">
         <div class="header">
             <h1>Md Jihadur Rahaman</h1>
-            <div class="hashtag">#SupportingBrazil 🇧🇷</div>
+            <div class="hashtag">
+                #SupportingBrazil 
+                <!-- নিখুঁত ও রিয়েলিস্টিক ব্রাজিল পতাকার SVG আইকন -->
+                <svg class="brazil-flag-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14">
+                    <rect width="20" height="14" fill="#009c3b"/>
+                    <path d="M 10,1 L 19,7 L 10,13 L 1,7 Z" fill="#ffdf00"/>
+                    <circle cx="10" cy="7" r="3.5" fill="#002171"/>
+                    <path d="M 6.5,7.5 Q 10,5.5 13.5,7.5 Q 10,6 6.5,7.5" fill="#ffffff"/>
+                </svg>
+            </div>
             <div class="live-badge">LIVE</div>
         </div>
 
+        <!-- ভিডিও প্লেয়ার এলিমেন্ট -->
         <div class="video-wrapper">
             <video id="video" controls autoplay muted playsinline></video>
         </div>
 
+        <!-- সার্ভার বক্স -->
         <div class="server-box">                    
             <button id="btn-0" class="server-btn badge-4k active" onclick="changeServer('https://nhjjhhjhjjhfjj.pages.dev/1782511273/6cccaaff5be44092a095c864bc8b6486/eZQaBXKMfJNW7ttS-jMyjL5FBePSPsrIZWodV3Z1CqM/fox4k-usa.m3u8', 0)">            
-                Server 1     
+                Server 5 (4K)      
             </button>                    
             <button id="btn-1" class="server-btn badge-hd" onclick="changeServer('https://tahmidx.cinemoja2.workers.dev/', 1)">            
                 Server 2        
@@ -219,6 +241,7 @@
         </div>
     </div>
 
+    <!-- স্ট্রিমিং ও সার্ভার সুইচিং কন্ট্রোল করার জাভাস্ক্রিপ্ট -->
     <script>
         var video = document.getElementById('video');
         var hls = null;
@@ -239,7 +262,6 @@
                     });
                 });
             } 
-            // সাফারি বা আইওএস (iOS) ব্রাউজারের নেটিভ সাপোর্টের জন্য
             else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = url;
                 video.addEventListener('loadedmetadata', function() {
@@ -252,20 +274,18 @@
         function changeServer(url, btnId) {
             loadStream(url);
 
-            // সব বাটন থেকে 'active' ক্লাস রিমুভ করা
             var buttons = document.querySelectorAll('.server-btn');
             buttons.forEach(function(btn) {
                 btn.classList.remove('active');
             });
 
-            // নির্দিষ্ট ক্লিক করা বাটনে 'active' ক্লাস যোগ করা
             var activeBtn = document.getElementById('btn-' + btnId);
             if (activeBtn) {
                 activeBtn.classList.add('active');
             }
         }
 
-        // পেজ লোড হওয়ার সাথে সাথে ডিফল্টভাবে Server 5 (যা এখন btn-0) চালু হবে
+        // পেজ লোড হওয়ার সাথে সাথে ডিফল্টভাবে Server 5 চালু হবে
         window.onload = function() {
             var defaultUrl = document.getElementById('btn-0').getAttribute('onclick').match(/'([^']+)'/)[1];
             loadStream(defaultUrl);
