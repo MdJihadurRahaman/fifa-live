@@ -1,347 +1,183 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Jihadur Rahaman - Live Stream</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        /* বেসিক রিসেট ও ব্যাকগ্রাউন্ড */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0d1117;
+            background: radial-gradient(circle, #161b22 0%, #0d1117 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-<title>LIVE Stream | Md Jihadur Rahaman</title>
+        /* কন্টেইনার */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
 
-<link rel="icon" href="data:image/svg+xml,
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-<text y='.9em' font-size='90'>📺</text></svg>">
+        /* হেডার ও নাম */
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.6), 0 0 20px rgba(56, 189, 248, 0.4);
+            margin-bottom: 5px;
+        }
+        .hashtag {
+            color: #00aeef;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
 
-<style>
+        /* লাইভ ব্যাজ */
+        .live-badge {
+            background-color: #dc2626;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+        }
+        .live-badge::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
 
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+        /* ভিডিও প্লেয়ার কন্টেইনার */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #000000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 25px;
+            aspect-ratio: 16 / 9; /* রেসপনসিভ ১৬:৯ রেশিও */
+        }
 
-body{
-min-height:100vh;
-background:
-radial-gradient(circle at top,#111827,#050505 60%);
-color:#fff;
-font-family:system-ui,Segoe UI,Roboto,sans-serif;
-display:flex;
-justify-content:center;
-padding:20px 14px;
-}
+        /* ভিডিও এলিমেন্ট */
+        video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-.container{
-width:100%;
-max-width:900px;
-display:flex;
-flex-direction:column;
-gap:18px;
-}
+        /* লিঙ্কডইন বাটন */
+        .btn-linkedin {
+            display: inline-block;
+            background: linear-gradient(180deg, #0077b5 0%, #005987 100%);
+            color: white;
+            text-decoration: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0, 119, 181, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-linkedin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 119, 181, 0.6);
+        }
 
+        /* ফুটার */
+        .footer {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+        }
 
-.header{
-text-align:center;
-}
+        /* ব্লিন্কিং অ্যানিমেশন */
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
 
-.header h1{
-font-size:clamp(1.8rem,5vw,3rem);
-text-shadow:0 0 20px #00a8ff;
-}
-
-
-.tag{
-color:#00a8ff;
-font-weight:700;
-margin-top:5px;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 8px; /* টেক্সট ও পতাকার মাঝের দূরত্ব */
-}
-
-
-.live-box{
-display:flex;
-justify-content:center;
-gap:10px;
-align-items:center;
-margin-top:12px;
-}
-
-
-.live{
-background:#e50914;
-padding:5px 14px;
-border-radius:30px;
-font-weight:bold;
-animation:pulse 1.2s infinite;
-}
-
-
-@keyframes pulse{
-50%{opacity:.35;transform:scale(.95)}
-}
-
-
-.player{
-width:100%;
-position:relative;
-aspect-ratio:16/9;
-background:#000;
-border-radius:18px;
-overflow:hidden;
-box-shadow:0 20px 60px #000;
-}
-
-
-video{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-
-.loading{
-position:absolute;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#0008;
-font-weight:600;
-}
-
-
-.controls{
-display:flex;
-gap:12px;
-justify-content:center;
-flex-wrap:wrap;
-}
-
-
-button,a{
-display: inline-block;
-border:0;
-cursor:pointer;
-padding:11px 22px;
-border-radius:30px;
-font-weight:700;
-text-decoration:none;
-}
-
-
-.full{
-background:#00a8ff;
-color:white;
-}
-
-
-.linkedin{
-background:#0077b5;
-color:white;
-}
-
-
-footer{
-text-align:center;
-color:#666;
-font-size:.8rem;
-margin-top:15px;
-}
-
-</style>
-
+        /* মোবাইল স্ক্রিনের জন্য */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+        }
+    </style>
 </head>
-
-
 <body>
 
-
-<div class="container">
-
-
-<div class="header">
-
-<h1>Md Jihadur Rahaman</h1>
-
-<div class="tag">
-<span>#SupportingBrazil</span>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 504" width="28" height="20" style="border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">
-  <rect width="720" height="504" fill="#009739"/>
-  <polygon points="360,61.2 658.8,252 360,442.8 61.2,252" fill="#FEDD00"/>
-  <circle cx="360" cy="252" r="126" fill="#012169"/>
-  <path d="M234,252 A126,126 0 0,1 486,252 A126,110 0 0,0 234,252" fill="#ffffff"/>
-</svg>
-</div>
-
-
-<div class="live-box">
-
-<div class="live">
-🔴 LIVE
-</div>
-
-</div>
-
-</div>
-
-
-<div class="player" id="player">
-
-
-<video id="video"
-autoplay
-muted
-playsinline
-controls>
-</video>
-
-
-<div class="loading" id="loading">
-Starting stream...
-</div>
-
-
-</div>
-
-
-
-<div class="controls">
-
-
-<a class="linkedin"
-href="https://www.linkedin.com/in/mdjihadurrahaman/"
-target="_blank">
-LinkedIn
-</a>
-
-</div>
-
-
-<footer>
-© 2026 Md Jihadur Rahaman
-</footer>
-
-
-</div>
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-
-<script>
-
-
-const video=document.getElementById("video");
-const loading=document.getElementById("loading");
-const player=document.getElementById("player");
-
-
-const streams=[
-
-<iframe src="//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw" width="100%" height="500px" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" allowfullscreen  allow="encrypted-media"></iframe>
-
-];
-
-
-let current=0;
-
-
-function start(){
-
-let url=streams[current];
-
-
-if(Hls.isSupported()){
-
-
-const hls=new Hls({
-enableWorker:true,
-lowLatencyMode:true,
-maxBufferLength:10
-});
-
-
-hls.loadSource(url);
-
-hls.attachMedia(video);
-
-
-hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-
-loading.style.display="none";
-
-video.play();
-
-});
-
-
-hls.on(Hls.Events.ERROR,(e,data)=>{
-
-
-if(data.fatal){
-
-loading.innerText="Reconnecting...";
-
-
-hls.destroy();
-
-
-setTimeout(()=>{
-
-current=(current+1)%streams.length;
-
-start();
-
-},3000);
-
-
-}
-
-
-});
-
-
-}
-
-
-else{
-
-
-video.src=url;
-
-video.play();
-
-video.onloadedmetadata=()=>{
-
-loading.style.display="none";
-
-};
-
-
-}
-
-
-}
-
-
-function fullscreenVideo(){
-
-if(player.requestFullscreen){
-
-player.requestFullscreen();
-
-}
-
-}
-
-
-start();
-
-
-</script>
-
+    <div class="container">
+        <div class="header">
+            <h1>Md Jihadur Rahaman</h1>
+            <div class="hashtag">#SupportingBrazil 🇧🇷</div>
+            <div class="live-badge">LIVE</div>
+        </div>
+
+        <div class="video-wrapper">
+            <video id="video" controls autoplay muted playsinline></video>
+        </div>
+
+        <a href="https://www.linkedin.com" target="_blank" class="btn-linkedin">LinkedIn</a>
+
+        <div class="footer">
+            &copy; 2026 Md Jihadur Rahaman
+        </div>
+    </div>
+
+    <script>
+        // আপনার প্রোফাইল কোড থেকে সংগৃহীত সরাসরি ভিডিও স্ট্রিমিং লিঙ্ক
+        var videoSrc = "https://prod-cdn01-live.toffeelive.com/live/FIFA-2026/0/master_1750.m3u8?hdntl=Expires=1782580517~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvdSbD449bwARmDYFHo0v1j6XMI0f3SjcsB_GpBWVWrywTXracuohdcxV8CsBwhNUBeJS_mmBAe1xtbC4065QoMH";
+        var video = document.getElementById('video');
+
+        if (Hls.isSupported()) {
+            var hls = new Hls({ maxBufferLength: 30 });
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+            });
+        } 
+        // সাফারি বা আইওএস (iOS) ব্রাউজারের নেটিভ সাপোর্টের জন্য
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+        }
+    </script>
 
 </body>
 </html>
