@@ -1,144 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Live FIFA</title>
+<title>FIFA Live</title>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-
 body{
 background:#0d1117;
 color:white;
 text-align:center;
-min-height:100vh;
+font-family:Arial;
 }
-
 
 h1{
-margin-top:25px;
-font-size:40px;
-text-shadow:0 0 20px #00c8ff;
+margin-top:30px;
+text-shadow:0 0 20px cyan;
 }
 
-
-.sub{
-color:#00c8ff;
-font-size:18px;
-margin:10px;
-}
-
-
-.live{
-display:inline-block;
-background:#ff2222;
-padding:7px 20px;
-border-radius:30px;
-font-weight:bold;
-margin:15px;
-box-shadow:0 0 20px red;
-}
-
-
-
-.player{
-
+video{
 width:80%;
 max-width:1000px;
 height:550px;
-margin:20px auto;
 background:black;
 border-radius:15px;
-overflow:hidden;
-box-shadow:0 0 25px #000;
-
 }
-
-
-video{
-
-width:100%;
-height:100%;
-background:black;
-
-}
-
-
-
-.buttons{
-
-margin-top:25px;
-
-}
-
 
 button{
-
-padding:14px 30px;
-margin:8px;
-
-border:none;
+padding:12px 30px;
+margin:10px;
+border:0;
 border-radius:10px;
-
-background:#1f2937;
-color:white;
-
-font-size:16px;
-font-weight:bold;
-
-cursor:pointer;
-
-}
-
-
-button:hover,
-.active{
-
 background:#2563eb;
-box-shadow:0 0 15px #2563eb;
-
+color:white;
+font-size:16px;
+cursor:pointer;
 }
-
-
-.status{
-
-margin-top:20px;
-color:#aaa;
-
-}
-
-
-.footer{
-
-margin-top:30px;
-display:inline-block;
-background:#0088cc;
-
-padding:12px 50px;
-
-border-radius:30px;
-
-}
-
 
 </style>
 
 </head>
-
 
 
 <body>
@@ -146,111 +48,46 @@ border-radius:30px;
 
 <h1>Md Jihadur Rahaman</h1>
 
-<div class="sub">
-#SupportingBrazil 🇧🇷
-</div>
-
-
-<div class="live">
-● LIVE
-</div>
-
-
-
-<div class="player">
+<p>#SupportingBrazil 🇧🇷</p>
 
 
 <video id="video"
-
 controls
-
 autoplay
-
 muted
-
 playsinline>
-
 </video>
 
 
-</div>
+<br>
 
 
-
-<div class="buttons">
-
-
-<button class="active" onclick="loadStream(this)">
-Server 1 (Toffee 4K)
-</button>
-
-
-<button onclick="loadStream(this)">
-Server 2
-</button>
-
-
-<button onclick="loadStream(this)">
-Server 3
-</button>
-
-
-<button onclick="loadStream(this)">
-Server 4
-</button>
-
-
-
-</div>
-
-
-
-<div class="status" id="status">
-
-Connecting...
-
-</div>
-
-
-
-<div class="footer">
-
-LinkedIn
-
-</div>
-
+<button onclick="play()">Server 1</button>
+<button onclick="play()">Server 2</button>
+<button onclick="play()">Server 3</button>
+<button onclick="play()">Server 4</button>
 
 
 
 <script>
 
 
-const video =
+const url =
+"https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8";
+
+
+let video =
 document.getElementById("video");
-
-
-const status =
-document.getElementById("status");
-
-
-
-const streamURL =
-
-"https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM";
-
 
 
 let hls;
 
 
-
-function startPlayer(){
+function play(){
 
 
 if(hls){
-
 hls.destroy();
-
 }
 
 
@@ -262,113 +99,46 @@ hls = new Hls({
 
 enableWorker:true,
 
-lowLatencyMode:true,
-
-liveSyncDurationCount:3,
-
-maxBufferLength:10,
+lowLatencyMode:true
 
 });
 
 
-hls.loadSource(streamURL);
-
+hls.loadSource(url);
 
 hls.attachMedia(video);
 
 
-
 hls.on(
 Hls.Events.MANIFEST_PARSED,
-function(){
-
-status.innerHTML="LIVE Connected";
-
-video.play().catch(()=>{
-
-status.innerHTML="Click Play button";
-
-});
-
-});
-
-
-hls.on(
-Hls.Events.ERROR,
-function(event,data){
-
-console.log(data);
-
-
-if(data.fatal){
-
-status.innerHTML=
-"Stream blocked / expired";
-
-}
-
-});
-
-
-}
-
-
-
-else if(
-video.canPlayType(
-"application/vnd.apple.mpegurl"
-)
-){
-
-
-video.src=streamURL;
+()=>{
 
 video.play();
 
-
-}
-
-}
-
-
-
-function loadStream(btn){
-
-
-document.querySelectorAll("button")
-.forEach(b=>{
-
-b.classList.remove("active");
-
 });
 
 
-btn.classList.add("active");
+}
 
+else{
 
-status.innerHTML="Loading...";
+video.src=url;
 
+video.play();
 
-startPlayer();
+}
 
 
 }
 
 
 
-
-window.onload=function(){
-
-startPlayer();
-
-};
+window.onload=play;
 
 
 
 </script>
 
 
-
 </body>
-
 </html>
