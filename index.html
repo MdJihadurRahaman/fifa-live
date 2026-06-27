@@ -1,98 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Live Stream</title>
+<title>Live FIFA</title>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
+
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
 }
+
 
 body{
-    background:#0d1117;
-    color:white;
-    text-align:center;
-    min-height:100vh;
+background:#0d1117;
+color:white;
+text-align:center;
+min-height:100vh;
 }
+
 
 h1{
-    margin-top:25px;
-    font-size:42px;
-    text-shadow:0 0 15px #00aaff;
+margin-top:25px;
+font-size:40px;
+text-shadow:0 0 20px #00c8ff;
 }
+
 
 .sub{
-    margin-top:8px;
-    color:#00aaff;
-    font-size:18px;
+color:#00c8ff;
+font-size:18px;
+margin:10px;
 }
+
 
 .live{
-    margin:20px auto;
-    background:#ff3030;
-    width:75px;
-    padding:6px;
-    border-radius:20px;
-    font-weight:bold;
+display:inline-block;
+background:#ff2222;
+padding:7px 20px;
+border-radius:30px;
+font-weight:bold;
+margin:15px;
+box-shadow:0 0 20px red;
 }
 
-.player-box{
-    width:75%;
-    max-width:1000px;
-    height:560px;
-    background:black;
-    margin:25px auto;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 0 20px #000;
+
+
+.player{
+
+width:80%;
+max-width:1000px;
+height:550px;
+margin:20px auto;
+background:black;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 0 25px #000;
+
 }
+
 
 video{
-    width:100%;
-    height:100%;
-    background:black;
+
+width:100%;
+height:100%;
+background:black;
+
 }
 
-.servers{
-    margin-top:25px;
+
+
+.buttons{
+
+margin-top:25px;
+
 }
+
 
 button{
-    margin:8px;
-    padding:14px 35px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
-    background:#1f2937;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
+
+padding:14px 30px;
+margin:8px;
+
+border:none;
+border-radius:10px;
+
+background:#1f2937;
+color:white;
+
+font-size:16px;
+font-weight:bold;
+
+cursor:pointer;
+
 }
+
 
 button:hover,
 .active{
-    background:#2563eb;
-    box-shadow:0 0 15px #2563eb;
+
+background:#2563eb;
+box-shadow:0 0 15px #2563eb;
+
 }
+
+
+.status{
+
+margin-top:20px;
+color:#aaa;
+
+}
+
 
 .footer{
-    margin-top:35px;
-    background:#0088cc;
-    display:inline-block;
-    padding:12px 45px;
-    border-radius:25px;
+
+margin-top:30px;
+display:inline-block;
+background:#0088cc;
+
+padding:12px 50px;
+
+border-radius:30px;
+
 }
 
+
 </style>
+
 </head>
+
 
 
 <body>
@@ -104,114 +150,225 @@ button:hover,
 #SupportingBrazil 🇧🇷
 </div>
 
+
 <div class="live">
 ● LIVE
 </div>
 
 
-<div class="player-box">
+
+<div class="player">
+
 
 <video id="video"
+
 controls
+
 autoplay
+
 muted
+
 playsinline>
+
 </video>
+
 
 </div>
 
 
-<div class="servers">
 
-<button class="active" onclick="changeServer(this)">
+<div class="buttons">
+
+
+<button class="active" onclick="loadStream(this)">
 Server 1 (Toffee 4K)
 </button>
 
-<button onclick="changeServer(this)">
+
+<button onclick="loadStream(this)">
 Server 2
 </button>
 
-<button onclick="changeServer(this)">
+
+<button onclick="loadStream(this)">
 Server 3
 </button>
 
-<button onclick="changeServer(this)">
+
+<button onclick="loadStream(this)">
 Server 4
 </button>
 
+
+
 </div>
+
+
+
+<div class="status" id="status">
+
+Connecting...
+
+</div>
+
 
 
 <div class="footer">
+
 LinkedIn
+
 </div>
+
 
 
 
 <script>
 
 
-const stream =
+const video =
+document.getElementById("video");
+
+
+const status =
+document.getElementById("status");
+
+
+
+const streamURL =
+
 "https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM";
 
 
-const video = document.getElementById("video");
+
+let hls;
 
 
-function playStream(){
+
+function startPlayer(){
+
+
+if(hls){
+
+hls.destroy();
+
+}
+
+
 
 if(Hls.isSupported()){
 
-let hls = new Hls();
 
-hls.loadSource(stream);
+hls = new Hls({
 
-hls.attachMedia(video);
+enableWorker:true,
 
-hls.on(Hls.Events.MANIFEST_PARSED,function(){
+lowLatencyMode:true,
 
-video.play().catch(()=>{});
+liveSyncDurationCount:3,
+
+maxBufferLength:10,
 
 });
 
+
+hls.loadSource(streamURL);
+
+
+hls.attachMedia(video);
+
+
+
+hls.on(
+Hls.Events.MANIFEST_PARSED,
+function(){
+
+status.innerHTML="LIVE Connected";
+
+video.play().catch(()=>{
+
+status.innerHTML="Click Play button";
+
+});
+
+});
+
+
+hls.on(
+Hls.Events.ERROR,
+function(event,data){
+
+console.log(data);
+
+
+if(data.fatal){
+
+status.innerHTML=
+"Stream blocked / expired";
+
 }
 
-else if(video.canPlayType('application/vnd.apple.mpegurl')){
+});
 
-video.src = stream;
+
+}
+
+
+
+else if(
+video.canPlayType(
+"application/vnd.apple.mpegurl"
+)
+){
+
+
+video.src=streamURL;
 
 video.play();
 
-}
 
 }
 
+}
 
-function changeServer(btn){
+
+
+function loadStream(btn){
+
 
 document.querySelectorAll("button")
-.forEach(b=>b.classList.remove("active"));
+.forEach(b=>{
+
+b.classList.remove("active");
+
+});
+
 
 btn.classList.add("active");
 
 
-video.pause();
+status.innerHTML="Loading...";
 
-playStream();
+
+startPlayer();
+
 
 }
+
 
 
 
 window.onload=function(){
 
-playStream();
+startPlayer();
 
 };
+
 
 
 </script>
 
 
+
 </body>
+
 </html>
