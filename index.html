@@ -1,144 +1,272 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Jihadur Rahaman - Live Stream</title>
+    <style>
+        /* বেসিক রিসেট ও ব্যাকগ্রাউন্ড */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0d1117;
+            background: radial-gradient(circle, #161b22 0%, #0d1117 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-<title>FIFA Live</title>
+        /* কন্টেইনার */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+        /* হেডার ও নাম */
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.6), 0 0 20px rgba(56, 189, 248, 0.4);
+            margin-bottom: 5px;
+        }
+        .hashtag {
+            color: #00aeef;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* ব্রাজিলের ফ্ল্যাগ SVG এর স্টাইল */
+        .brazil-flag-svg {
+            width: 24px;
+            height: auto;
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            display: inline-block;
+            vertical-align: middle;
+        }
 
-<style>
-body{
-background:#0d1117;
-color:white;
-text-align:center;
-font-family:Arial;
-}
+        /* লাইভ ব্যাজ */
+        .live-badge {
+            background-color: #dc2626;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+        }
+        .live-badge::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
 
-h1{
-margin-top:30px;
-text-shadow:0 0 20px cyan;
-}
+        /* ভিডিও প্লেয়ার কন্টেইনার (১৬:৯ রেস্পনসিভ রেশিও) */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #000000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 25px;
+            aspect-ratio: 16 / 9;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
-video{
-width:80%;
-max-width:1000px;
-height:550px;
-background:black;
-border-radius:15px;
-}
+        /* সার্ভার বাটন বক্স ডিজাইন */
+        .server-box {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .server-btn {
+            background: #1f2937;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            min-width: 110px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .server-btn:hover {
+            background: #374151;
+            transform: translateY(-1px);
+        }
 
-button{
-padding:12px 30px;
-margin:10px;
-border:0;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-size:16px;
-cursor:pointer;
-}
+        .badge-4k {
+            border-color: #eab308;
+            color: #fde047;
+        }
+        .badge-4k:hover {
+            background: rgba(234, 179, 8, 0.2);
+        }
 
-</style>
+        /* অ্যাক্টিভ সার্ভার বাটন ইফেক্ট */
+        .server-btn.active {
+            background: #2563eb;
+            border-color: #60a5fa;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
+            color: white;
+        }
 
+        /* লিঙ্কডইন বাটন */
+        .btn-linkedin {
+            display: inline-block;
+            background: linear-gradient(180deg, #0077b5 0%, #005987 100%);
+            color: white;
+            text-decoration: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0, 119, 181, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
+        }
+        .btn-linkedin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 119, 181, 0.6);
+        }
+
+        /* ফুটার */
+        .footer {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1.8rem; }
+            .server-btn { width: 100%; }
+        }
+    </style>
 </head>
-
-
 <body>
 
+    <div class="container">
+        <div class="header">
+            <h1>Md Jihadur Rahaman</h1>
+            <div class="hashtag">
+                #SupportingBrazil 
+                <svg class="brazil-flag-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14">
+                    <rect width="20" height="14" fill="#009c3b"/>
+                    <path d="M 10,1 L 19,7 L 10,13 L 1,7 Z" fill="#ffdf00"/>
+                    <circle cx="10" cy="7" r="3.5" fill="#002171"/>
+                    <path d="M 6.5,7.5 Q 10,5.5 13.5,7.5 Q 10,6 6.5,7.5" fill="#ffffff"/>
+                </svg>
+            </div>
+            <div class="live-badge">LIVE</div>
+        </div>
 
-<h1>Md Jihadur Rahaman</h1>
+        <!-- রেসপনসিভ ভিডিও বক্স যেখানে আইফ্রেমটি লোড হবে -->
+        <div class="video-wrapper">
+            <iframe 
+                id="live-player"
+                src="//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw" 
+                allow="autoplay; encrypted-media; fullscreen" 
+                scrolling="no"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+        </div>
 
-<p>#SupportingBrazil 🇧🇷</p>
+        <!-- ৫ টি কাস্টমাইজড সার্ভার বাটন -->
+        <div class="server-box">                    
+            <button id="btn-0" class="server-btn badge-4k active" onclick="changeIframe('//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw', 0)">            
+                Server 1 (4K)      
+            </button>                    
+            <button id="btn-1" class="server-btn" onclick="changeIframe('//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw', 1)">            
+                Server 2        
+            </button>                    
+            <button id="btn-2" class="server-btn" onclick="changeIframe('//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw', 2)">            
+                Server 3        
+            </button>                    
+            <button id="btn-3" class="server-btn" onclick="changeIframe('//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw', 3)">            
+                Server 4        
+            </button>                    
+            <button id="btn-4" class="server-btn" onclick="changeIframe('//cdn.stmify.com/embed-free/v1/tsn-1-ca-jw', 4)">            
+                Server 5        
+            </button>                    
+        </div> 
 
+        <a href="https://www.linkedin.com" target="_blank" class="btn-linkedin">LinkedIn</a>
 
-<video id="video"
-controls
-autoplay
-muted
-playsinline>
-</video>
+        <div class="footer">
+            &copy; 2026 Md Jihadur Rahaman
+        </div>
+    </div>
 
+    <script>
+        // বাটন ক্লিকে আইফ্রেমের সোর্স ও একটিভ ক্লাস পরিবর্তনের লজিক
+        function changeIframe(iframeUrl, btnId) {
+            var playerFrame = document.getElementById('live-player');
+            
+            // আইফ্রেম সোর্স পরিবর্তন
+            playerFrame.src = iframeUrl;
 
-<br>
+            // সব বাটন থেকে একটিভ ক্লাস রিমুভ করা
+            var buttons = document.querySelectorAll('.server-btn');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
 
-
-<button onclick="play()">Server 1</button>
-<button onclick="play()">Server 2</button>
-<button onclick="play()">Server 3</button>
-<button onclick="play()">Server 4</button>
-
-
-
-<script>
-
-
-const url =
-"https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8";
-
-
-let video =
-document.getElementById("video");
-
-
-let hls;
-
-
-function play(){
-
-
-if(hls){
-hls.destroy();
-}
-
-
-
-if(Hls.isSupported()){
-
-
-hls = new Hls({
-
-enableWorker:true,
-
-lowLatencyMode:true
-
-});
-
-
-hls.loadSource(url);
-
-hls.attachMedia(video);
-
-
-hls.on(
-Hls.Events.MANIFEST_PARSED,
-()=>{
-
-video.play();
-
-});
-
-
-}
-
-else{
-
-video.src=url;
-
-video.play();
-
-}
-
-
-}
-
-
-
-window.onload=play;
-
-
-
-</script>
-
+            // ক্লিক করা বাটনে একটিভ ক্লাস যোগ করা
+            var activeBtn = document.getElementById('btn-' + btnId);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
