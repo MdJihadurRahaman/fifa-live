@@ -49,14 +49,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px; /* টেক্সট ও SVG এর মাঝে স্পেস */
+            gap: 8px;
         }
         
         /* ব্রাজিলের ফ্ল্যাগ SVG এর স্টাইল */
         .brazil-flag-svg {
             width: 24px;
             height: auto;
-            border-radius: 2px; /* সামান্য কার্ভ যাতে দেখতে প্রিমিয়াম লাগে */
+            border-radius: 2px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             display: inline-block;
             vertical-align: middle;
@@ -107,7 +107,21 @@
             object-fit: contain;
         }
 
-        /* সার্ভার বাটন বক্স ডিজাইন (ফ্লেক্স গ্রিড) */
+        /* নোটিশ বক্স (এক্সটেনশন স্ট্রিমিং-এর জন্য নির্দেশিকা) */
+        .notice-box {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: #fde047;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* সার্ভার বাটন বক্স ডিজাইন */
         .server-box {
             margin: 20px auto;
             max-width: 600px;
@@ -131,27 +145,17 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
         
-        /* হোভার ইফেক্ট */
         .server-btn:hover {
             background: #374151;
             transform: translateY(-1px);
         }
 
-        /* 4k ব্যাজ বাটন স্পেশাল স্টাইল */
         .badge-4k {
             border-color: #eab308;
             color: #fde047;
         }
         .badge-4k:hover {
             background: rgba(234, 179, 8, 0.2);
-        }
-
-        /* অ্যাক্টিভ (চলমান) সার্ভার বাটন ইফেক্ট */
-        .server-btn.active {
-            background: #2563eb;
-            border-color: #60a5fa;
-            box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
-            color: white;
         }
 
         /* লিঙ্কডইন বাটন */
@@ -181,14 +185,12 @@
             letter-spacing: 0.5px;
         }
 
-        /* ব্লিন্কিং অ্যানিমেশন */
         @keyframes blink {
             0% { opacity: 0.3; }
             50% { opacity: 1; }
             100% { opacity: 0.3; }
         }
 
-        /* মোবাইল স্ক্রিন রেসপনসিভ */
         @media (max-width: 480px) {
             .header h1 { font-size: 1.8rem; }
             .server-btn { width: 100%; }
@@ -202,7 +204,6 @@
             <h1>Md Jihadur Rahaman</h1>
             <div class="hashtag">
                 #SupportingBrazil 
-                <!-- নিখুঁত ও রিয়েলিস্টিক ব্রাজিল পতাকার SVG আইকন -->
                 <svg class="brazil-flag-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14">
                     <rect width="20" height="14" fill="#009c3b"/>
                     <path d="M 10,1 L 19,7 L 10,13 L 1,7 Z" fill="#ffdf00"/>
@@ -213,83 +214,59 @@
             <div class="live-badge">LIVE</div>
         </div>
 
-        <!-- ভিডিও প্লেয়ার এলিমেন্ট -->
+        <!-- নোটিশ বক্স -->
+        <div class="notice-box">
+            ⚠️ লাইভ স্ট্রিমটি দেখার জন্য প্লেয়ার এক্সটেনশনটি ইনস্টল থাকা আবশ্যক। নিচে সার্ভার সিলেক্ট করুন।
+        </div>
+
+        <!-- ভিডিও প্লেয়ার এলিমেন্ট (ইন-পেজ প্লেয়ার ব্যাকআপ হিসেবে থাকবে) -->
         <div class="video-wrapper">
             <video id="video" controls autoplay muted playsinline></video>
         </div>
 
-        <!-- সার্ভার বক্স -->
+        <!-- নতুন এক্সটেনশন লিঙ্ক সহ সার্ভার বক্স -->
         <div class="server-box">                    
-            <button id="btn-0" class="server-btn badge-hd active" onclick="changeServer('https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM', 0)">            
-                Server 1      
+            <button class="server-btn badge-4k" onclick="openExtensionStream('chrome-extension://akkncdpkjlfanomlnpmmolafofpnpjgn/player/player.html?site=https://mdjihadurrahaman.github.io/fifa-live/#https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM')">            
+                Server 1 (Toffee 4K)      
             </button>                    
-            <button id="btn-1" class="server-btn badge-hd" onclick="changeServer('https://tahmidx.cinemoja2.workers.dev/', 1)">            
+            <button class="server-btn" onclick="openExtensionStream('chrome-extension://akkncdpkjlfanomlnpmmolafofpnpjgn/player/player.html?site=https://mdjihadurrahaman.github.io/fifa-live/#https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM')">            
                 Server 2        
             </button>                    
-            <button id="btn-2" class="server-btn badge-hd" onclick="changeServer('https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM', 2)">            
+            <button class="server-btn" onclick="openExtensionStream('chrome-extension://akkncdpkjlfanomlnpmmolafofpnpjgn/player/player.html?site=https://mdjihadurrahaman.github.io/fifa-live/#https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM')">            
                 Server 3        
             </button>                    
-            <button id="btn-3" class="server-btn badge-hd" onclick="changeServer('https://nhjjhhjhjjhfjj.pages.dev/1782510867/f9a6277ea834417a99643095abd06d71/0I52ZEUvQEL0Uu_rrOKDB78GByQpBiOh00AZW-ZWnJY/fox-sports-1.m3u8', 3)">            
+            <button class="server-btn" onclick="openExtensionStream('chrome-extension://akkncdpkjlfanomlnpmmolafofpnpjgn/player/player.html?site=https://mdjihadurrahaman.github.io/fifa-live/#https://prod-cdn01-live.toffeelive.com/live/FIFA-2026-2/0/master_3000.m3u8?hdntl=Expires=1782667986~_GO=Generated~URLPrefix=aHR0cHM6Ly9wcm9kLWNkbjAxLWxpdmUudG9mZmVlbGl2ZS5jb20~Signature=AVXEwvc37dFUKGbQ0dUdyGFB9e8j-pC4-UVmGLize49cKF1QHePFJ7ZhXcBlcL7j6OUeKfpDZr_4ITmtn-YUkJb8GMMM')">            
                 Server 4        
             </button>                    
         </div> 
 
-        <a href="https://www.linkedin.com/mdjihadurrahaman" target="_blank" class="btn-linkedin">LinkedIn</a>
+        <a href="https://www.linkedin.com" target="_blank" class="btn-linkedin">LinkedIn</a>
 
         <div class="footer">
             &copy; 2026 Md Jihadur Rahaman
         </div>
     </div>
 
-    <!-- স্ট্রিমিং ও সার্ভার সুইচিং কন্ট্রোল করার জাভাস্ক্রিপ্ট -->
     <script>
+        // এক্সটেনশন প্রোটোকল সরাসরি ইন-পেজ প্লেয়ারে চলবে না, তাই এটি উইন্ডো রিডাইরেক্ট করবে
+        function openExtensionStream(url) {
+            window.location.href = url;
+        }
+
+        // ইন-পেজ ভিডিও প্লেয়ার লোড করার ব্যাকআপ ফাংশন (যদি কোনো ডিরেক্ট m3u8 থাকে তার জন্য)
         var video = document.getElementById('video');
         var hls = null;
 
-        // ভিডিও লোড করার মূল ফাংশন
         function loadStream(url) {
-            if (hls) {
-                hls.destroy();
-            }
-
+            if (hls) { hls.destroy(); }
             if (Hls.isSupported()) {
                 hls = new Hls({ maxBufferLength: 30 });
                 hls.loadSource(url);
                 hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.play().catch(function(e) {
-                        console.log("Autoplay prevented, waiting for user interaction");
-                    });
-                });
-            } 
-            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = url;
-                video.addEventListener('loadedmetadata', function() {
-                    video.play();
-                });
             }
         }
-
-        // বাটন ক্লিক করে সার্ভার চেঞ্জ করার ফাংশন
-        function changeServer(url, btnId) {
-            loadStream(url);
-
-            var buttons = document.querySelectorAll('.server-btn');
-            buttons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-
-            var activeBtn = document.getElementById('btn-' + btnId);
-            if (activeBtn) {
-                activeBtn.classList.add('active');
-            }
-        }
-
-        // পেজ লোড হওয়ার সাথে সাথে ডিফল্টভাবে Server 5 চালু হবে
-        window.onload = function() {
-            var defaultUrl = document.getElementById('btn-0').getAttribute('onclick').match(/'([^']+)'/)[1];
-            loadStream(defaultUrl);
-        };
     </script>
 
 </body>
