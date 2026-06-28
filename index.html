@@ -13,70 +13,109 @@
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+
 body{
-    margin:0;
-    background:#0d1117;
-    color:white;
-    font-family:Arial, sans-serif;
-    text-align:center;
+background:#0d1117;
+color:white;
+font-family:Arial, sans-serif;
+text-align:center;
+min-height:100vh;
 }
 
 
 h1{
-    margin-top:25px;
-    font-size:40px;
-    text-shadow:0 0 20px #00eaff;
+margin-top:25px;
+font-size:42px;
+text-shadow:0 0 20px #00eaff;
 }
 
 
 .sub{
-    color:#00eaff;
-    font-size:18px;
+
+margin-top:10px;
+font-size:20px;
+color:#00eaff;
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+
 }
 
 
 .live{
-    display:inline-block;
-    background:red;
-    padding:8px 25px;
-    border-radius:30px;
-    margin:20px;
-    font-weight:bold;
+
+display:inline-block;
+margin:20px;
+
+background:red;
+padding:8px 25px;
+
+border-radius:30px;
+
+font-weight:bold;
+
+box-shadow:0 0 20px red;
+
 }
+
 
 
 .player{
 
-    width:80%;
-    max-width:1000px;
-    height:550px;
-    margin:auto;
-    background:black;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 0 25px black;
+width:80%;
+max-width:1000px;
+
+height:550px;
+
+margin:20px auto;
+
+background:black;
+
+border-radius:15px;
+
+overflow:hidden;
+
+box-shadow:0 0 25px black;
 
 }
+
 
 
 video{
 
-    width:100%;
-    height:100%;
+width:100%;
+height:100%;
+background:black;
 
 }
 
 
+
 button{
 
-    margin:20px;
-    padding:14px 35px;
-    border:none;
-    border-radius:10px;
-    background:#2563eb;
-    color:white;
-    font-size:17px;
-    cursor:pointer;
+margin:20px;
+
+padding:14px 35px;
+
+border:none;
+
+border-radius:10px;
+
+background:#2563eb;
+
+color:white;
+
+font-size:17px;
+
+cursor:pointer;
 
 }
 
@@ -88,8 +127,33 @@ background:#00aaff;
 }
 
 
-</style>
+.status{
 
+margin:15px;
+
+color:#aaa;
+
+}
+
+
+
+.footer{
+
+margin-top:30px;
+
+display:inline-block;
+
+background:#0088cc;
+
+padding:12px 45px;
+
+border-radius:30px;
+
+}
+
+
+
+</style>
 
 </head>
 
@@ -98,37 +162,116 @@ background:#00aaff;
 <body>
 
 
-<h1>Md Jihadur Rahaman</h1>
+
+<h1>
+Md Jihadur Rahaman
+</h1>
+
+
 
 <div class="sub">
-#SupportingBrazil 🇧🇷
+
+
+<svg 
+width="38" 
+height="25" 
+viewBox="0 0 36 24"
+xmlns="http://www.w3.org/2000/svg">
+
+
+<rect width="36" height="24" fill="#009c3b"/>
+
+
+<polygon 
+points="18,3 33,12 18,21 3,12"
+fill="#ffdf00"/>
+
+
+<circle 
+cx="18" 
+cy="12" 
+r="5"
+fill="#002776"/>
+
+
+<path 
+d="M14 11.5c2.5-1.5 5.5-1.5 8 0"
+stroke="white"
+stroke-width="0.7"
+fill="none"/>
+
+
+</svg>
+
+
+<span>
+#SupportingBrazil
+</span>
+
+
 </div>
+
+
 
 
 <div class="live">
+
 ● LIVE
+
 </div>
+
+
 
 
 
 <div class="player">
 
-<video id="video"
+
+<video 
+id="video"
 
 controls
+
 autoplay
+
 muted
+
 playsinline>
 
 </video>
+
 
 </div>
 
 
 
+
+
 <button onclick="playStream()">
+
 ONE CLICK PLAY
+
 </button>
+
+
+
+<div class="status" id="status">
+
+Connecting...
+
+</div>
+
+
+
+
+<div class="footer">
+
+LinkedIn
+
+</div>
+
+
+
 
 
 
@@ -137,6 +280,10 @@ ONE CLICK PLAY
 
 const video =
 document.getElementById("video");
+
+
+const status =
+document.getElementById("status");
 
 
 
@@ -153,6 +300,7 @@ let hls;
 function playStream(){
 
 
+
 if(hls){
 
 hls.destroy();
@@ -161,7 +309,9 @@ hls.destroy();
 
 
 
+
 if(Hls.isSupported()){
+
 
 
 hls = new Hls({
@@ -170,7 +320,9 @@ enableWorker:true,
 
 lowLatencyMode:true,
 
-liveSyncDurationCount:3
+liveSyncDurationCount:3,
+
+maxBufferLength:10
 
 });
 
@@ -178,15 +330,47 @@ liveSyncDurationCount:3
 
 hls.loadSource(stream);
 
+
+
 hls.attachMedia(video);
 
 
 
 hls.on(
-Hls.Events.MANIFEST_PARSED,
-()=>{
 
-video.play().catch(()=>{});
+Hls.Events.MANIFEST_PARSED,
+
+function(){
+
+status.innerHTML="LIVE Connected";
+
+
+video.play().catch(()=>{
+
+status.innerHTML="Click Play";
+
+});
+
+
+});
+
+
+
+
+hls.on(
+
+Hls.Events.ERROR,
+
+function(event,data){
+
+console.log(data);
+
+
+if(data.fatal){
+
+status.innerHTML="Stream Error";
+
+}
 
 });
 
@@ -194,20 +378,30 @@ video.play().catch(()=>{});
 }
 
 
+
+
+
 else if(
+
 video.canPlayType(
+
 "application/vnd.apple.mpegurl"
+
 )
+
 ){
+
 
 video.src=stream;
 
 video.play();
 
+
 }
 
 
 }
+
 
 
 
