@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -14,133 +13,166 @@
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
-
 
 body{
-
-background:#0d1117;
-color:white;
-font-family:Arial, sans-serif;
-text-align:center;
-min-height:100vh;
-
+    background:#0d1117;
+    color:white;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    min-height:100vh;
+    padding-bottom:40px;
 }
-
 
 
 h1{
-
-margin-top:25px;
-font-size:40px;
-text-shadow:0 0 20px #00eaff;
-
+    margin-top:25px;
+    font-size:40px;
+    text-shadow:0 0 20px #00eaff;
 }
-
 
 
 .sub{
+    margin-top:10px;
+    font-size:20px;
+    color:#00eaff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
 
-margin-top:10px;
-font-size:20px;
-color:#00eaff;
 
-display:flex;
-justify-content:center;
-align-items:center;
-gap:8px;
+/* Clock */
+
+.clock{
+
+    margin-top:15px;
+    font-size:22px;
+    color:#00ff99;
+    font-weight:bold;
+    text-shadow:0 0 15px #00ff99;
 
 }
 
 
+/* Live Badge */
 
 .live{
 
-display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
 
-margin:20px;
+    margin:20px;
 
-background:red;
+    background:rgba(255,0,0,.15);
+    border:1px solid rgba(255,0,0,.5);
 
-padding:8px 25px;
+    padding:8px 25px;
+    border-radius:30px;
 
-border-radius:30px;
-
-font-weight:bold;
-
-box-shadow:0 0 20px red;
+    font-weight:bold;
 
 }
 
 
+.live-dot{
 
+    width:10px;
+    height:10px;
+
+    background:red;
+
+    border-radius:50%;
+
+    box-shadow:0 0 10px red;
+
+    animation:pulse 1.5s infinite;
+
+}
+
+
+@keyframes pulse{
+
+0%{
+transform:scale(.9);
+opacity:1;
+}
+
+70%{
+transform:scale(1);
+opacity:1;
+box-shadow:0 0 0 10px rgba(255,0,0,0);
+}
+
+100%{
+transform:scale(.9);
+opacity:0;
+}
+
+}
+
+
+/* Player */
 
 .player{
 
+    width:90%;
+    max-width:1000px;
 
-width:90%;
-max-width:1000px;
+    margin:20px auto;
 
-margin:20px auto;
+    background:#000;
 
-background:black;
+    border-radius:15px;
 
-border-radius:15px;
+    overflow:hidden;
 
-overflow:hidden;
-
-box-shadow:0 0 25px black;
-
+    box-shadow:0 15px 35px rgba(0,0,0,.5);
 
 }
-
 
 
 video{
 
-
-width:100%;
-
-height:auto;
-
-display:block;
-
-background:black;
+    width:100%;
+    display:block;
+    background:black;
 
 }
 
+
+/* Button */
 
 
 button{
 
+    margin:20px;
 
-margin:20px;
+    padding:14px 35px;
 
-padding:14px 35px;
+    border:none;
 
-border:none;
+    border-radius:10px;
 
-border-radius:10px;
+    background:#2563eb;
 
-background:#2563eb;
+    color:white;
 
-color:white;
+    font-size:17px;
 
-font-size:17px;
-
-cursor:pointer;
-
+    cursor:pointer;
 
 }
 
 
-
 button:hover{
 
-background:#00aaff;
+    background:#00aaff;
 
 }
 
@@ -148,28 +180,45 @@ background:#00aaff;
 
 .status{
 
-margin:15px;
+    margin:15px;
 
-color:#aaa;
+    color:#aaa;
 
 }
 
+
+
+/* Footer */
+
+
+.footer-container{
+
+margin-top:40px;
+
+}
 
 
 .footer{
 
-margin-top:30px;
+display:inline-flex;
 
-display:inline-block;
+align-items:center;
 
-background:#0088cc;
+gap:10px;
 
-padding:12px 45px;
+background:#0077b5;
+
+color:white;
+
+padding:12px 35px;
 
 border-radius:30px;
 
-}
+text-decoration:none;
 
+font-weight:bold;
+
+}
 
 
 </style>
@@ -177,56 +226,40 @@ border-radius:30px;
 </head>
 
 
-
 <body>
 
 
 
-<h1>
-Md Jihadur Rahaman
-</h1>
+<h1>Md Jihadur Rahaman</h1>
 
 
 
 <div class="sub">
 
-
-<svg 
-width="38"
-height="25"
-viewBox="0 0 36 24"
-xmlns="http://www.w3.org/2000/svg">
-
+<svg width="38" height="25" viewBox="0 0 36 24">
 
 <rect width="36" height="24" fill="#009c3b"/>
 
-
-<polygon
-points="18,3 33,12 18,21 3,12"
+<polygon points="18,3 33,12 18,21 3,12"
 fill="#ffdf00"/>
 
-
-<circle
-cx="18"
-cy="12"
-r="5"
+<circle cx="18" cy="12" r="5"
 fill="#002776"/>
-
-
-<path
-d="M14 11.5c2.5-1.5 5.5-1.5 8 0"
-stroke="white"
-stroke-width="0.7"
-fill="none"/>
-
 
 </svg>
 
 
-<span>
-#SupportingBrazil
-</span>
+<span>#SupportingBrazil</span>
 
+</div>
+
+
+
+<!-- Time -->
+
+<div class="clock" id="clock">
+
+Loading time...
 
 </div>
 
@@ -234,15 +267,17 @@ fill="none"/>
 
 
 <div class="live">
-● LIVE
+
+<span class="live-dot"></span>
+
+LIVE
+
 </div>
 
 
 
 
-
 <div class="player">
-
 
 <video
 
@@ -258,9 +293,7 @@ playsinline>
 
 </video>
 
-
 </div>
-
 
 
 
@@ -283,9 +316,22 @@ Connecting...
 
 
 
-<div class="footer">
+
+<div class="footer-container">
+
+<a 
+
+href="https://www.linkedin.com/in/mdjihadurrahaman"
+
+target="_blank"
+
+class="footer">
+
 
 LinkedIn
+
+</a>
+
 
 </div>
 
@@ -296,27 +342,24 @@ LinkedIn
 <script>
 
 
-const video =
-document.getElementById("video");
+const video = document.getElementById("video");
 
-
-const status =
-document.getElementById("status");
-
+const status = document.getElementById("status");
 
 
 const stream =
-
 "https://1nyaler.streamhostingcdn.top/stream/26/index.m3u8";
-
 
 
 let hls;
 
 
 
-
 function playStream(){
+
+
+status.innerHTML="Connecting...";
+
 
 
 if(hls){
@@ -324,7 +367,6 @@ if(hls){
 hls.destroy();
 
 }
-
 
 
 
@@ -340,17 +382,18 @@ lowLatencyMode:true,
 
 liveSyncDurationCount:3,
 
-maxBufferLength:10
+maxBufferLength:10,
+
+backBufferLength:30
 
 });
 
 
 
-
 hls.loadSource(stream);
 
-hls.attachMedia(video);
 
+hls.attachMedia(video);
 
 
 
@@ -361,17 +404,18 @@ Hls.Events.MANIFEST_PARSED,
 ()=>{
 
 
-status.innerHTML="LIVE Connected";
+status.innerHTML="🔴 LIVE Connected";
 
 
 video.play().catch(()=>{
 
-status.innerHTML="Tap Play";
+status.innerHTML="▶ Tap Play";
 
 });
 
 
 });
+
 
 
 
@@ -386,9 +430,19 @@ Hls.Events.ERROR,
 console.log(data);
 
 
+
 if(data.fatal){
 
-status.innerHTML="Stream Error";
+
+status.innerHTML="⚠ Reconnecting...";
+
+
+setTimeout(()=>{
+
+playStream();
+
+},5000);
+
 
 }
 
@@ -401,21 +455,21 @@ status.innerHTML="Stream Error";
 
 
 
-else if(
 
-video.canPlayType(
+else if(video.canPlayType(
 "application/vnd.apple.mpegurl"
-)
-
-){
+)){
 
 
 video.src=stream;
 
 video.play();
 
+status.innerHTML="🔴 LIVE Connected";
+
 
 }
+
 
 
 }
@@ -431,10 +485,63 @@ playStream();
 
 
 
+
+
+// Clock
+
+
+function updateClock(){
+
+
+const now=new Date();
+
+
+const time =
+now.toLocaleTimeString("en-BD",{
+
+hour:"2-digit",
+
+minute:"2-digit",
+
+second:"2-digit",
+
+hour12:true
+
+});
+
+
+
+document.getElementById("clock").innerHTML =
+"🕒 "+time;
+
+
+
+}
+
+
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+
+
+
+
+window.addEventListener(
+
+"online",
+
+()=>{
+
+playStream();
+
+});
+
+
 </script>
 
 
 
 </body>
-
 </html>
